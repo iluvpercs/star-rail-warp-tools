@@ -52,7 +52,3 @@ Error-severity findings must be resolved. Warning-severity findings are reviewed
 ## Reporting issues
 
 Use the issue templates. For bug reports, include the PowerShell version, `adb version`, your Windows version, and the script output with any URLs or tokens removed. Never paste raw logcat output into a public issue.
-
-## Releases
-
-Release tags follow `vMAJOR.MINOR.PATCH` (for example, `v1.0.0`). Pushing such a tag triggers the release workflow, which packages source files and generates release notes. No logs or URLs are uploaded.
