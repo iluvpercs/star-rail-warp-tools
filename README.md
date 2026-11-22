@@ -42,16 +42,17 @@ Set `$WatchSeconds` at the top of the script to make the fallback shorter or lon
 - Phone connected over USB with USB debugging enabled and authorized
 - Honkai: Star Rail installed on the phone
 
-## Why the old version failed
-
-- It only looked for `https://gs.hoyoverse.com/hkrpg/...`, but the gacha URL can be logged under other HoYoverse hosts (`webstatic`, `webstatic-sea`, `hk4e-api`, `api-takumi`, ...). The working Ascent app watches all of them and looks for `gacha` + `authkey`.
-- It cleared the log first, then read it only once after you pressed Enter. The line can already have been overwritten by the phone's small logcat buffer. This version checks the existing log first, then polls briefly if needed.
-
 ## Troubleshooting
 
 - **Still no link?** Check what the phone actually logs: `adb logcat -d -t 3000 | findstr /i gacha`. Do not post the raw output publicly - it contains tokens.
 - **Android System WebView 114+:** Google patched this logging behaviour, so logcat (and system tracing) no longer show the link on many devices. Use the in-game Warp History **Share** button, or the Ascent app, instead.
 - **Log line disappears quickly:** increase the device logger buffer (Developer options > Logger buffer size) or run `adb logcat -G 16M` before starting.
+
+## Security
+
+[![VirusTotal Scan](https://img.shields.io/badge/VirusTotal-View%20Scan-blue?logo=virustotal)](https://www.virustotal.com/gui/url/ccb8eb1b2d0754c03b80948b36ba48bf54d467c91882f6f5fb2305500829062e/detection)
+
+The project can be independently checked using VirusTotal before execution.
 
 ## Notes
 
