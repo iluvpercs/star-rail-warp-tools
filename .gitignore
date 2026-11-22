@@ -2,3 +2,13 @@ star-rail-warp-*.json
 star-rail-warp-*.csv
 *.log
 *.txt
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local temporary files
+*.tmp
+dist/

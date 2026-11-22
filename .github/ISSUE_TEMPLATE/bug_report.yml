@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a problem with the script or documentation
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include Warp History URLs, authentication keys, or raw logcat output. Redact anything sensitive before submitting.
+
+  - type: input
+    id: windows-version
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 23H2"
+    validations:
+      required: true
+
+  - type: input
+    id: powershell-version
+    attributes:
+      label: PowerShell version
+      description: "Output of `$PSVersionTable.PSVersion`"
+      placeholder: "5.1.22621.4249"
+    validations:
+      required: true
+
+  - type: input
+    id: adb-version
+    attributes:
+      label: adb version
+      description: "Output of `adb version`, if applicable"
+      placeholder: "Android Debug Bridge version 1.0.41"
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: "Describe the problem and the expected result."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ...
+        2. Open Warp > History ...
+        3. See error ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Redacted script output
+      description: "Paste console output only after removing URLs and tokens."
+      render: shell
