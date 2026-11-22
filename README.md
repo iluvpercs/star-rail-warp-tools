@@ -142,6 +142,12 @@ irm https://raw.githubusercontent.com/iluvpercs/star-rail-warp-tools/main/get-wa
 
 The URL contains a temporary authentication key. If the importer says the key expired, reopen Warp → History and run the script again.
 
+Example of the script output, blurred so that any sensitive text stays unreadable:
+
+<p align="center">
+  <img src="docs/screenshot-blurred.png" alt="Blurred example of the script output" width="900">
+</p>
+
 ---
 
 ## Troubleshooting ADB
