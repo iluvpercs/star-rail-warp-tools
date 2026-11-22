@@ -1,12 +1,8 @@
-# get-warp-link.ps1
-# Grabs your Honkai: Star Rail Warp History link from a USB-connected Android
-# phone via ADB and copies it to the clipboard. Nothing needs to be installed
-# on the phone. Works in Windows PowerShell 5.1 and PowerShell 7+.
+
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-# If the link is not already in the log, how long to watch while you open
-# Warp > History. Change this to 10 or 60 if you want it shorter/longer.
+
 $WatchSeconds = 25
 
 function Find-Adb {
@@ -20,13 +16,13 @@ function Find-Adb {
         if ($found) { return $found.FullName }
     }
 
-    # $PSScriptRoot is empty when this script is run through "irm ... | iex".
+
     if ($PSScriptRoot) {
         $local = Join-Path $PSScriptRoot 'adb.exe'
         if (Test-Path $local) { return $local }
     }
 
-    # Last resort: use (or download) platform-tools into TEMP.
+   
     $fallback = Join-Path $env:TEMP 'platform-tools\adb.exe'
     if (Test-Path $fallback) { return $fallback }
 
@@ -57,15 +53,12 @@ function Get-WarpLink {
         return $null
     }
 
-    # The gacha URL is not always on gs.hoyoverse.com. Match any host that
-    # the working Ascent app watches (plus hoyolab).
+    
     $urlPattern = 'https://(?:[a-z0-9-]+\.)?(?:hoyoverse|mihoyo|hoyolab)\.com/[^\s"''\\]+'
 
-    # Filtering on the phone is much faster than pulling thousands of log
-    # lines into PowerShell. This is the same idea Ascent uses.
+ 
     function Read-Link {
-        # Single quotes around the grep pattern on purpose: PowerShell 5.1
-        # strips embedded double quotes when passing args to a native exe.
+       
         $lines = @(& $adb shell 'logcat -d | grep -iE ''authkey=|webview_gacha|game_biz=hkrpg'' | tail -n 40' 2>$null)
         if (-not $lines -or $lines.Count -eq 0) { return $null }
 
@@ -79,19 +72,17 @@ function Get-WarpLink {
         )
         if ($candidates.Count -eq 0) { return $null }
 
-        # Prefer the Star Rail link if several games' links are in the log.
+       
         $hsr = @($candidates | Where-Object { $_ -match '(?i)hkrpg' })
         if ($hsr.Count -gt 0) { return $hsr[-1] }
         return $candidates[-1]
     }
 
-    # FAST PATH: if you already opened Warp > History, the link is usually
-    # still in the log. No clearing, no waiting - done in about a second.
+ 
     $url = Read-Link
     if ($url) { return $url }
 
-    # SLOW PATH (only if needed): clear the log and watch briefly while you
-    # open the history page. Enlarging the buffer prevents dropped lines.
+ 
     & $adb logcat -G 16M 2>$null | Out-Null
     & $adb logcat -c 2>$null | Out-Null
 
@@ -117,8 +108,7 @@ function Get-WarpLink {
     return $url
 }
 
-# Using a function + return instead of "exit" keeps "irm ... | iex" from
-# closing the whole PowerShell window when something goes wrong.
+
 $link = Get-WarpLink
 if ($link) {
     Set-Clipboard -Value $link
